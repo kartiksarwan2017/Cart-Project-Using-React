@@ -20,18 +20,10 @@ class CartItem extends React.Component {
         // console.log('this', this.state);
         
         // setState form 1
-        this.setState({
-          qty: this.state.qty + 1
-        });
+        // this.setState({
+        //   qty: this.state.qty + 1
+        // });
 
-        this.setState({
-          qty: this.state.qty + 1
-        });
-
-
-        this.setState({
-          qty: this.state.qty + 1
-        });
 
         //setState form 1
         // this.setState({
@@ -39,11 +31,23 @@ class CartItem extends React.Component {
         // });
 
         // setState form 2 - if previous state required use this
-        // this.setState((prevState) => {
-        //     return {
-        //       qty: prevState.qty + 1
-        //     }
-        // });
+        this.setState((prevState) => {
+            return {
+              qty: prevState.qty + 1
+            }
+        });
+
+        this.setState((prevState) => {
+          return {
+            qty: prevState.qty + 1
+          }
+      });
+
+      this.setState((prevState) => {
+        return {
+          qty: prevState.qty + 1
+        }
+    });
     }
 
 
