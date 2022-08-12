@@ -3,73 +3,6 @@ import React from 'react';
 
 class CartItem extends React.Component {
 
-    // testing () {
-    //   const promise = new Promise((resolve, reject) => {
-
-    //     setTimeout(() => {
-    //       resolve('done');
-    //     }, 5000);
-    //   });
-
-    //    promise.then(() => {
-    //     // setState acts like a synchronous call
-    //        this.setState({qty : this.state.qty + 10});
-
-    //        this.setState({qty : this.state.qty + 10});
-
-    //        this.setState({qty : this.state.qty + 10});
-
-    //        console.log('state', this.state);
-    //    });
-    // }
-
-    increaseQuantity = () => {
-
-        // this.state.qty += 1;
-        // console.log('this', this.state);
-        
-        // setState form 1
-        // this.setState({
-        //   qty: this.state.qty + 1
-        // });
-
-
-        //setState form 1
-        // this.setState({
-        //   title: "some new title"
-        // }, () => {
-          // console.log('this.state', this.state);
-        // });
-
-        // setState form 2 - if previous state required use this
-        this.setState((prevState) => {
-            return {
-              qty: prevState.qty + 1
-            }
-        }, () =>{
-          console.log('this.state', this.state);
-        });
-       
-        // console.log(this.state);
-    }
-
-
-    decreaseQuantity = () => {
-      const { qty } = this.state;
-
-      if(qty === 0){
-        return;
-      }
-
-      // setState form 2 - if previous state required use this
-      this.setState((prevState) => {
-          return {
-            qty: prevState.qty - 1
-          }
-      });
-  }
-
-
     render(){
         console.log('this.props', this.props);
         const { price, title, qty} = this.props.product;
@@ -91,7 +24,9 @@ class CartItem extends React.Component {
                   className="actions-icons"
                   src="https://cdn-icons-png.flaticon.com/512/992/992651.png"
                 //   onClick= {this.increaseQuantity.bind(this)}
-                onClick= {this.increaseQuantity}
+                onClick= {() => 
+                  this.props.onIncreaseQuantity(this.props.product)
+                }
                 />
                 <img
                   alt="decrease"
