@@ -40,6 +40,14 @@ class App extends React.Component {
   }
 
 
+  componentWillUnmount() {
+    // cleanup
+    console.log('COMPONENT_UNMOUNT')
+
+
+  }
+
+
   render(){
 
 
