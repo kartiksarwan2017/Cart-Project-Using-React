@@ -1,107 +1,81 @@
 import React from 'react';
 import Cart from './Cart';
 import Navbar from './Navbar';
+import {db} from './index';
+import {getFirestore, getDocs, collection} from 'firebase/firestore/lite';
+
 
 
 class App extends React.Component {
 
-
-
     constructor() {
       super();
       this.state = {
-        products: [
-          {
-            price: 99,
-            title: "Watch",
-            qty: 1,
-            img: "https://images.unsplash.com/photo-1524805444758-089113d48a6d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=388&q=80",
-            id: 1,
-          },
-          {
-            price: 999,
-            title: "Mobile Phone",
-            qty: 10,
-            img: "https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=367&q=80",
-            id: 2,
-          },
-          {
-            price: 999,
-            title: "Laptop",
-            qty: 4,
-            img: "https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1032&q=80",
-            id: 3,
-          },
-          {
-            price: 500,
-            title: "Earphones",
-            qty: 1,
-            img: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
-            id: 4,
-          },
-        ],
-      };
-  
-      // this.increaseQuantity = this.increaseQuantity.bind(this);
-  
-      // this.testing();
-    }
-  
-  
-    handleIncreaseQuantity = (product) => {
-      console.log('Heyy please inc the qty of ', product);
-      const { products } = this.state;
-      const index = products.indexOf(product);
-  
-      products[index].qty += 1;
-  
-      this.setState({
-  
-        // products: products
-        products
-  
-  
-      });
-  
-    }
-  
-  
-    handleDecreaseQuantity = (product) => {
-      console.log('Heyy please inc the qty of ', product);
-      const { products } = this.state;
-      const index = products.indexOf(product);
-  
-      if(products[index].qty === 0){
-        return;
+        products: []
       }
   
-      products[index].qty -= 1;
+    }
+
+     getProduct = async (db) => {
+      const cities=collection(db,"products");
+      const citysnap= await getDocs(cities);
+      const cityList = citysnap.docs.map(doc => doc.data());
+      console.log(cityList);
+      // return cityList;
+      console.log(citysnap)
+      console.log(cities);
+    }
+
+   //function to change 
+ componentDidMount() {
+  console.log(db);
+
+  this.getProduct(db);
+
+   }   
   
-      this.setState({
+    handleIncreaseQuantity = async (product) => {
+      // console.log('Heyy please inc the qty of ', product);
+      // let { products } = this.state;
+      // const index = products.indexOf(product);
   
-        // products: products
-        products
+      // const docRef = doc(collection(db, "products"), products[index].id);
+      // await updateDoc(docRef, {
+      //   qty: products[index].qty + 1,
+
   
-  
-      });
+      // });
   
     }
   
   
-    handleDeleteProduct = (id) => {
-      const {products} = this.state;
+    handleDecreaseQuantity = async (product) => {
+      // console.log('Heyy please inc the qty of ', product);
+      // let { products } = this.state;
+      // const index = products.indexOf(product);
+      // if (products[index].qty !== 0) {
+      //   const docRef = doc(collection(db, "products"), products[index].id);
+      //   await updateDoc(docRef, {
+      //     qty: products[index].qty - 1,
+      //   });
+      // }
   
-      const items = products.filter((item) => item.id !== id
-      ); // [{}]
+    }
   
   
-      this.setState({
-        products: items
-      })
+    handleDeleteProduct = (productToDelete) => {
+      // const docRef = doc(collection(db, "products"), productToDelete);
+      // deleteDoc(docRef)
+      //   .then(() => {
+      //     console.log("product deleted");
+      //   })
+      //   .catch((error) => {
+      //     console.log(error);
+      //   });
     }
 
 
-getCartCount = () => {
+    getCartCount = () => {
       const {products}= this.state;
 
       let count = 0;
@@ -145,8 +119,10 @@ render(){
       onIncreaseQuantity = {this.handleIncreaseQuantity}
       onDecreaseQuantity = {this.handleDecreaseQuantity}
       onDeleteProduct = {this.handleDeleteProduct}/>
-      <div style= {{padding: 10, fontSize: 20 }}>TOTAL: {this.getCartTotal()}</div>
+      <div style= {{padding: 10, fontSize: 20 }}
+      >TOTAL: {this.getCartTotal()}</div>
     </div>
+      
   );
 
   }
